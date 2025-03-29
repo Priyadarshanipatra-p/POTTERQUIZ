@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POTTERQUIZ - Wizard's Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2c3e50;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .connect-wallet {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 1rem;
+            display:inline;
+        }
+        .marketplace-title {
+            text-align: center;
+            margin: 2rem 0;
+            font-size: 1.5rem;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .search-bar input {
+            padding: 0.5rem 1rem;
+            width: 50%;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+        }
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+        }
+        .featured-items {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            padding: 0 2rem;
+            margin-bottom: 3rem;
+        }
+        .item-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .item-image {
+            background-color: #eee;
+            height: 150px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        .item-rarity {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .gryffindor { color: #ae0001; }
+        .ravenclaw { color: #222f5b; }
+        .slytherin { color: #2a623d; }
+        .hufflepuff { color: #f0c75e; }
+        .item-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        .buy-btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            width: 100%;
+            cursor: pointer;
+        }
+        .auction-section {
+            background-color: white;
+            padding: 2rem;
+            margin: 0 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .auction-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .auction-item {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .auction-image {
+            background-color: #eee;
+            width: 100px;
+            height: 100px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        .auction-details {
+            flex-grow: 1;
+        }
+        .auction-bid {
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        .auction-time {
+            color: #e67e22;
+            margin-bottom: 1rem;
+        }
+        .bid-btn {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .navbar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #f0c75e; /* Hufflepuff yellow for the logo */
+            text-decoration: none;
+            font-family: 'Harry Potter', cursive, sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #e67e22; /* Orange for hover */
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #e67e22;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .connect-wallet {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .connect-wallet:hover {
+            background-color: #d35400;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #2c3e50;
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                gap: 1rem;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 100;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .connect-wallet {
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        /* Harry Potter font (optional) */
+        @font-face {
+            font-family: 'Harry Potter';
+            src: url('https://fonts.cdnfonts.com/css/harry-potter') format('woff2');
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">POTTERQUIZ</a>
+        
+        <div class="hamburger">☰</div>
+        
+        <div class="nav-links">
+            <a href="#">Marketplace</a>
+            <a href="#">Collections</a>
+            <a href="#">Leaderboard</a>
+            <a href="#">About</a>
+            <button class="connect-wallet">Connect Wallet</button>
+        </div>
+    </nav>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
+</head>
+<body>
+    <div class="marketplace-title">
+        <h2 style="color: #000000;">WIZARD'S MARKETPLACE</h2>
+        <p>Trade enchanted badges, earn magical rewards, and show off your House Pride</p>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" placeholder="Search magical items...">
+    </div>
+
+    <div class="filters">
+        <button class="filter-btn">All Houses</button>
+        <button class="filter-btn">All Rarities</button>
+    </div>
+
+    <h3 style="padding: 0 2rem;">FEATURED MAGICAL ITEMS</h3>
+    <div class="featured-items">
+        <div class="item-card" >
+            <div class="item-image">ELDER WAND</div>
+            <div class="item-rarity gryffindor">Legendary - Gryffindor</div>
+            <div class="item-price">500 Gold</div>
+            <button class="buy-btn">Buy Now</button>
+        </div>
+        <div class="item-card">
+            <div class="item-image">ANCIENT SPELLBOOK</div>
+            <div class="item-rarity ravenclaw">Rare - Ravenclaw</div>
+            <div class="item-price">300 Gold</div>
+            <button class="buy-btn">Buy Now</button>
+        </div>
+        <div class="item-card">
+            <div class="item-image">FELIX FELICIS POTION</div>
+            <div class="item-rarity slytherin">Rare - Slytherin</div>
+            <div class="item-price">250 Gold</div>
+            <button class="buy-btn">Buy Now</button>
+        </div>
+        <div class="item-card">
+            <div class="item-image">GOLDEN SNITCH</div>
+            <div class="item-rarity hufflepuff">Legendary - Hufflepuff</div>
+            <div class="item-price">450 Gold</div>
+            <button class="buy-btn">Buy Now</button>
+        </div>
+    </div>
+
+    <div class="auction-section">
+        <h3 class="auction-title">LIVE AUCTIONS</h3>
+        <div class="auction-item">
+            <div class="auction-image">MYSTICAL CRYSTAL BALL</div>
+            <div class="auction-details">
+                <div class="auction-bid">Current Bid: 750 Gold</div>
+                <div class="auction-time">Ends in 2h 45m</div>
+            </div>
+            <button class="bid-btn">Place Bid</button>
+        </div>
+    </div>
+</body>
+</html>

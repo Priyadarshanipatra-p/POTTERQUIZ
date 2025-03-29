@@ -1,0 +1,153 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    background: url('download\ 1.jpg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    opacity: 0.8;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c1a47;
+    padding: 15px 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ffcc00;
+}
+
+.sign-in {
+    background-color: #ffcc00;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.sign-in:hover {
+    background-color: #e6b800;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.leaderboard, .profile, .house-pride, .recent-activity, .achievements {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.leaderboard-entry {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.leaderboard-entry:hover {
+    background-color: #f8f8f8;
+}
+
+.leaderboard-entry:last-child {
+    border-bottom: none;
+}
+
+.profile {
+    text-align: center;
+}
+
+.profile-pic {
+    background:url('photo-1551269901-5c5e14c25df7.jpg');
+    width: 100px;
+    border-radius: 50%;
+    border: 3px solid #ffcc00;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin: 5px;
+    font-weight: bold;
+}
+
+.red {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.yellow {
+    background-color: #f1c40f;
+    color: black;
+}
+
+.progress-bar {
+    height: 20px;
+    background: #ddd;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress-bar span {
+    display: block;
+    height: 100%;
+    background: #c0392b;
+    border-radius: 10px;
+    transition: width 0.4s ease-in-out;
+}
+
+.recent-activity p {
+    font-size: 16px;
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.achievements {
+    text-align: center;
+    font-weight: bold;
+    padding: 15px;
+}

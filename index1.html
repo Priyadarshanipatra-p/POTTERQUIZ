@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PotterQuiz - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://wallpaperaccess.com/full/838646.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #f0f0f0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .logo {
+            font-size: 2rem;
+            color: #fff;
+            margin: 0;
+        }
+
+        .logo span {
+            color: #d4af37;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        .sign-in {
+            background-color: #d4af37;
+            color: #000;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .sign-in:hover {
+            background-color: #f0c14b;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: 10% auto;
+            padding: 2rem;
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+            width: 350px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            color: #aaa;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #d4af37;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #d4af37;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .form-submit:hover {
+            background-color: #f0c14b;
+        }
+
+        .form-toggle {
+            text-align: center;
+            margin-top: 1rem;
+            color: #aaa;
+        }
+
+        .form-toggle a {
+            color: #d4af37;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .form-toggle a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 5rem 2rem;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .header-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #d4af37;
+        }
+
+        .header-content p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .magic-duel, .join-house {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .magic-duel {
+            background-color: #d4af37;
+            color: #000;
+        }
+
+        .join-house {
+            background-color: transparent;
+            color: #d4af37;
+            border: 2px solid #d4af37;
+        }
+
+        .magic-duel:hover, .join-house:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 3rem 2rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            margin: 2rem 0;
+        }
+
+        section h2 {
+            text-align: center;
+            color: #d4af37;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .tournament-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tournament-card {
+            background-color: #1a1a1a;
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+            padding: 1.5rem;
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .tournament-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .tournament-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .tournament-card h3 {
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #d4af37;
+        }
+
+        #question {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        #answers {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        #answers button {
+            padding: 0.75rem;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #answers button:hover {
+            background-color: #444;
+        }
+
+        .quiz-container > button {
+            display: block;
+            margin: 0 auto;
+            padding: 0.75rem 1.5rem;
+            background-color: #d4af37;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 2rem;
+            color: #aaa;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #d4af37;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: #aaa;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #d4af37;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #444;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            nav ul {
+                margin: 1rem 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .header-content h1 {
+                font-size: 2rem;
+            }
+
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .tournament-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #answers {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <h1 class="logo">Potter<span>Quiz</span></h1>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#leaderboard">Leaderboard</a></li>
+                <li><a href="#tournament">Tournaments</a></li>
+                <li><a href="indexx.html">Marketplace</a></li>
+                <li><a href="#how-to-play">How to Play</a></li>
+            </ul>
+            <button class="sign-in" id="openLoginModal">Sign In</button>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Welcome Back, Wizard!</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="form-submit">Sign In</button>
+            </form>
+            <div class="form-toggle">
+                Don't have an account? <a id="showSignup">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Join the Wizarding World!</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required placeholder="Create a password (min 8 chars)">
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" required placeholder="Confirm your password">
+                </div>
+                <button type="submit" class="form-submit">Create Account</button>
+            </form>
+            <div class="form-toggle">
+                Already have an account? <a id="showLogin">Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <header id="home">
+        <div class="header-content">
+            <h1>Enter the Magical World of Knowledge</h1>
+            <p>Test your wizarding knowledge, compete for House Pride, and become a legendary quiz master!</p>
+            <div class="buttons">
+                <button class="magic-duel">Enter the Magic Duel!</button>
+                <button class="join-house">Join a House</button> </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="tournament">
+        <h2>Upcoming Tournaments</h2>
+        <div class="tournament-container">
+            <div class="tournament-card">
+                <a href="https://r.search.yahoo.com/_ylt=Awrx.xvQ0udn.QEAqTq7HAx.;_ylu=Y29sbwNzZzMEcG9zAzEEdnRpZAMEc2VjA3Ny/RV=2/RE=1744455632/RO=10/RU=https%3a%2f%2fwww.harrypotter.com%2ffeatures%2ftriwizard-tournament-timeline/RK=2/RS=SwKdHiBHU2rETeclBupF5VC_LJM-" target="_blank">
+                <img src="tournamnet.jpg" alt="Grand Wizarding Tournament"></a>
+                <h3>Grand Wizarding Tournament</h3>
+                <p>April 15, 2025</p>
+        
+            </div>
+            <div class="tournament-card">
+                <a href="https://r.search.yahoo.com/_ylt=Awr1SUln1OdnJQIAYcO7HAx.;_ylu=Y29sbwNzZzMEcG9zAzMEdnRpZAMEc2VjA3Ny/RV=2/RE=1744456040/RO=10/RU=https%3a%2f%2falliancehockey.com%2fTournament-Listings%2f/RK=2/RS=_lFsMzP00fsLSM.XAY4TeS62leY-" target="_blank">
+                <img src="house.jpg" alt="House Cup Challenge"></a>
+                <h3>House Cup Challenge</h3>
+                <p>May 1, 2025</p>
+            </div>
+            <div class="tournament-card">
+                <a href="https://r.search.yahoo.com/_ylt=AwrKFZDr1OdnyAIAL067HAx.;_ylu=Y29sbwNzZzMEcG9zAzEEdnRpZAMEc2VjA3Ny/RV=2/RE=1744456172/RO=10/RU=https%3a%2f%2fwww.harrypotter.com%2fquiz%2fthe-triwizard-tournament-quiz/RK=2/RS=8x0g9DRybPi3IooIGaySW3bG33A-" target="_blank">
+                <img src="quiz.jpg" alt="Triwizard Quiz Cup"></a>
+                <h3>Triwizard Quiz Cup</h3>
+                <p>May 20, 2025</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="quiz">
+        <h2>Wizarding Quiz</h2>
+        <div class="quiz-container">
+            <p id="question">Loading question...</p>
+            <div id="answers"></div>
+            <button onclick="nextQuestion()">Next Question</button>
+        </div>
+    </section>
+
+    <audio id="correct-sound" src="rightanswer-95219.mp3"></audio>
+    <audio id="incorrect-sound" src="incorrect-293358.mp3"></audio>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>PotterQuiz</h3>
+                <p>The ultimate magical knowledge challenge platform.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#faq">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="account.html">Account Settings</a></li>
+
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="https://r.search.yahoo.com/_ylt=Awrx.dIh1udnBwIAIaS7HAx.;_ylu=Y29sbwNzZzMEcG9zAzEEdnRpZAMEc2VjA3Ny/RV=2/RE=1744456481/RO=10/RU=https%3a%2f%2ftwitter.com%2fwizardingworld/RK=2/RS=A1KnW31dAciNa11bQcZjDBObQVE-"><i class="fab fa-twitter"></i></a>
+                    <a href="https://r.search.yahoo.com/_ylt=AwrKEioC1udnJAIA0V27HAx.;_ylu=Y29sbwNzZzMEcG9zAzEEdnRpZAMEc2VjA3Ny/RV=2/RE=1744456450/RO=10/RU=https%3a%2f%2fwww.facebook.com%2f%40harrypotter%2f/RK=2/RS=RcPJYVB5RaGn0eEdLqsrJuFJqJw-"><i class="fab fa-facebook"></i></a>
+                    <a href="https://r.search.yahoo.com/_ylt=AwrKGide1edn.gEASUq7HAx.;_ylu=Y29sbwNzZzMEcG9zAzEEdnRpZAMEc2VjA3Ny/RV=2/RE=1744456287/RO=10/RU=https%3a%2f%2fwww.instagram.com%2fharrypotter%2f/RK=2/RS=L3dRalCxIE3oh3CK7H42NZGmivc-"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">© 2025 PotterQuiz. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Login/Signup Modal Functionality
+        const loginModal = document.getElementById("loginModal");
+        const signupModal = document.getElementById("signupModal");
+        const openLoginModal = document.getElementById("openLoginModal");
+        const showSignup = document.getElementById("showSignup");
+        const showLogin = document.getElementById("showLogin");
+        const closeButtons = document.querySelectorAll(".close");
+
+        openLoginModal.onclick = function() {
+            loginModal.style.display = "block";
+        }
+
+        showSignup.onclick = function() {
+            loginModal.style.display = "none";
+            signupModal.style.display = "block";
+        }
+
+        showLogin.onclick = function() {
+            signupModal.style.display = "none";
+            loginModal.style.display = "block";
+        }
+
+        closeButtons.forEach(button => {
+            button.onclick = function() {
+                loginModal.style.display = "none";
+                signupModal.style.display = "none";
+            }
+        });
+
+        window.onclick = function(event) {
+            if (event.target == loginModal) {
+                loginModal.style.display = "none";
+            }
+            if (event.target == signupModal) {
+                signupModal.style.display = "none";
+            }
+        }
+
+        // Form Handling
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+            
+            // Here you would typically send this data to your backend
+            console.log("Login attempt with:", email, password);
+            
+            // For demo purposes, we'll just show an alert
+            alert(`Login attempt with email: ${email}`);
+            loginModal.style.display = "none";
+        });
+
+        document.getElementById("signupForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const email = document.getElementById("signupEmail").value;
+            const password = document.getElementById("signupPassword").value;
+            const confirmPassword = document.getElementById("signupConfirmPassword").value;
+            
+            if (password !== confirmPassword) {
+                alert("Passwords don't match!");
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert("Password must be at least 8 characters long!");
+                return;
+            }
+            
+
+            // For demo purposes, we'll just show an alert
+            alert(`Account created for: ${email}\nYou can now login with your credentials.`);
+            signupModal.style.display = "none";
+            loginModal.style.display = "block";
+        });
+
+        // Quiz Functionality
+        const questions = [
+            { question: "What house was Harry Potter sorted into?", answers: ["Ravenclaw", "Hufflepuff", "Gryffindor", "Slytherin"], correct: 2 },
+            { question: "What is the name of Harry Potter's owl?", answers: ["Crookshanks", "Errol", "Hedwig", "Fawkes"], correct: 2 },
+            { question: "What platform do you board the Hogwarts Express from?", answers: ["7 ¾", "8 ½", "9 ¾", "10 ½"], correct: 2 },
+            {question: "Who is the Half-Blood Prince?", answers: ["Harry Potter", "Severus Snape", "Albus Dumbledore", "Tom Riddle"],correct:1},
+            { question: "What is the name of wizarding bank in Diagon Alley?", answers: ["Gringotts", "Ollivanders", "Flourish and Blotts", "The Leky Cauldron"], correct: 1 },
+            { question: "What potion grants the drinker luck for a limited time?", answers: ["Polyjuice Potion", "Amortentia", "Felix Felicis", " Veritaserum"],correct:1},
+        
+        ];
+        
+        let currentQuestion = 0;
+        function loadQuestion() {
+            const questionElement = document.getElementById("question");
+            const answersElement = document.getElementById("answers");
+            
+            questionElement.textContent = questions[currentQuestion].question;
+            answersElement.innerHTML = "";
+            
+            questions[currentQuestion].answers.forEach((answer, index) => {
+                const btn = document.createElement("button");
+                btn.textContent = answer;
+                btn.onclick = () => checkAnswer(index);
+                answersElement.appendChild(btn);
+            });
+        }
+        
+        function checkAnswer(index) {
+            const correctSound = document.getElementById("correct-sound");
+            const incorrectSound = document.getElementById("incorrect-sound");
+            
+            if (index === questions[currentQuestion].correct) {
+                correctSound.play();
+                alert("Correct!");
+            } else {
+                incorrectSound.play();
+                alert("Incorrect! Try again.");
+            }
+        }
+        
+        function nextQuestion() {
+            currentQuestion = (currentQuestion + 1) % questions.length;
+            loadQuestion();
+        }
+        
+        window.onload = loadQuestion;
+    </script>
+</body>
+</html>
